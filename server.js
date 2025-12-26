@@ -9,7 +9,9 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 
 const port = 4040;
-const handler = app.handle.bind(app);
+// Deno.serve passes ConnInfo as the 2nd arg, but oak's handle expects a Deno.Conn.
+// Drop the extra arg to avoid the assertion that was causing 500s on Deploy.
+const handler = (request) => app.handle(request);
 
 // Deno.serve works both locally and on Deno Deploy (port is ignored on Deploy)
 Deno.serve({ port }, handler);
