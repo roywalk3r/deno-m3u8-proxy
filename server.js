@@ -8,5 +8,13 @@ app.use(cacheRoutes(3600)); // Cache for 1 hour
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-console.log("✅ Deno proxy server running at http://localhost:4040");
-await app.listen({ port: 4040 });
+// ✅ Deno Deploy entrypoint (no ports, no listen)
+export default {
+  fetch: app.fetch,
+};
+
+// (Optional) Local dev only:
+// if (import.meta.main) {
+//   console.log("✅ Local server running at http://localhost:4040");
+//   await app.listen({ port: 4040 });
+// }
