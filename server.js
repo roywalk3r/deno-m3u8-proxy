@@ -9,7 +9,8 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 
 const port = 4040;
+const handler = app.handle.bind(app);
 
 // Deno.serve works both locally and on Deno Deploy (port is ignored on Deploy)
-Deno.serve({ port }, app.fetch);
+Deno.serve({ port }, handler);
 console.log(`✅ Deno proxy server running at http://localhost:${port}`);
