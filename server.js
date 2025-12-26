@@ -4,13 +4,13 @@ import { router } from "./routes/routes.js";
 
 const app = new Application();
 
-app.use(cacheRoutes(3600)); // Cache for 1 hour
+app.use(cacheRoutes(3600));
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-// ✅ Deno Deploy entrypoint (no ports, no listen)
+// ✅ Deno Deploy expects a fetch FUNCTION here
 export default {
-  fetch: app.fetch,
+  fetch: (req) => app.fetch(req),
 };
 
 // (Optional) Local dev only:
